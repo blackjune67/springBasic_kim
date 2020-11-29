@@ -18,7 +18,6 @@ public class MemberService {
     //static을 했을 때는 class를 바라보고 있는 상태라서 큰 문제가 없어보이나...
     //static\을 뺸다면 문제가 생긴다.
     //그래서 new를 해서 객체를 가져오는게 아닌 DI 를 적용한다.
-    @Autowired
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
