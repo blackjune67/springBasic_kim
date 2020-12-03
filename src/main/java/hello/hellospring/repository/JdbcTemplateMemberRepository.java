@@ -3,8 +3,11 @@ package hello.hellospring.repository;
 import hello.hellospring.domain.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +27,8 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findById(Long id) {
-        return Optional.empty();
+        List<Member> result = jdbcTemplate.query("select * from member where id = ?", memberRowMamber());
+        return result.stream().findAny();
     }
 
     @Override
@@ -36,4 +40,27 @@ public class JdbcTemplateMemberRepository implements MemberRepository {
     public List<Member> findAll() {
         return null;
     }
+
+    private RowMapper<Member> memberRowMamber() {
+        /*
+        람다로 변경이 가능하다.
+        return new RowMapper<Member>() {
+            @Override
+            public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
+                Member member = new Member();
+                member.setId(rs.getLong("id"));
+                member.setName(rs.getString("name"));
+                return member;
+            }
+        }*/
+
+        return (rs, rowNum) -> {
+            Member member = new Member();
+            member.setId(rs.getLong("id"));
+            member.setName(rs.getString("name"));
+            return member;
+        };
+
+    }
+
 }
