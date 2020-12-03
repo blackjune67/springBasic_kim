@@ -8,13 +8,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-//@Transactional
-//@Transactional
+@Transactional
 public class MemberServiceIntegrationTest {
 
     //테스트에서 injection 시 construct로 하지 않고 편하게 @Autowired로 한다.
@@ -38,10 +39,11 @@ public class MemberServiceIntegrationTest {
     }*/
 
     @Test
+    //@Commit
     void join() {
         //given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("spring");
 
         //when
         Long saveId = memberService.join(member);
@@ -55,10 +57,10 @@ public class MemberServiceIntegrationTest {
     public void 중복_회원예외() {
         //given
         Member member1 = new Member();
-        member1.setName("spring1");
+        member1.setName("spring");
 
         Member member2 = new Member();
-        member2.setName("spring1");
+        member2.setName("spring");
 
         //when
         memberService.join(member1);
