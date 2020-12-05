@@ -21,9 +21,9 @@ public class MemmoryMemberRepositoryTest {
     }
 
     @Test
-    public void save() {
+    public void 회원가입() {
         Member member = new Member();
-        member.setName("spring");
+        member.setName("spring1234");
         memberRepository.save(member);
         Member result = memberRepository.findById(member.getId()).get();
 
